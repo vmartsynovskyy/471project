@@ -63,7 +63,7 @@ Navigate to the `gpac` submodule of this repository and build the custom fork:
 ./configure && make -j
 ```
 
-Play a video: 
+Play a video using the bba0 algorithm:
 ```
 ./bin/gcc/gpac --algo=bba0 --buffer=15000 --aggressive=yes -logs=dash@info -i http://localhost:8080/tom.mpd vout ffdec 
 ```
