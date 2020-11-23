@@ -70,3 +70,5 @@ Play a video using the bba0 algorithm:
 
 TODO: Add buffer stats
 
+TODO: Configure with minimal dependencies
+
