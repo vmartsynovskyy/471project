@@ -33,7 +33,7 @@ popd
 pushd docker
 
 docker build -t nginx-video .
-docker run -p 8080:8080 -v ${VIDEOS_PATH}:/www/data nginx-video
+docker run --privileged -p 8080:8080 -v ${VIDEOS_PATH}:/www/data nginx-video
 
 popd
 
