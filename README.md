@@ -5,7 +5,7 @@
 This repository uses git submodules to include my custom fork of GPAC. Make sure to clone recursively:
 
 ```
-git clone --recurse git@github.com:vmartsynovskyy/471project.git
+git clone --recurse https://github.com/vmartsynovskyy/471project.git
 ```
 
 ## Simple Usage (Ubuntu 20.04)
@@ -25,6 +25,40 @@ because docker installation on Ubuntu is complex and conflicting installations c
 
 WARNING: Do not exit the script until done viewing the videos because it runs the DASH server. The next steps can be completed in another tab.
 
+## Test cases
+
+### Case #1
+
+The first case is a basic test case of the QUETRA ABR algorithm. Run it using the following command:
+
+```
+./gpac/bin/gcc/gpac -k -logs=dash@info httpin:src=http://localhost:8080/tom.mpd @0 dashin:algo=quetra:aggressive=yes @0 ffdec @0 compositor:player=base:FID=compose:mbuf=15000
+```
+
+The expected output should be the video starting with low quality and the quality should increase until it stabilizes at the highest level. The logs should
+show some information about the buffer health and quality levels at each run of the algorithm.
+
+### Case #2
+
+The second case is a test of two players both using the PANDA ABR algorithm. Run it by running the following command in two different terminal windows:
+
+```
+./gpac/bin/gcc/gpac -k -logs=dash@info httpin:src=http://localhost:8080/scientific.mpd @0 dashin:algo=panda:aggressive=yes @0 ffdec @0 compositor:player=base:FID=compose:mbuf=15000
+```
+
+The expected output should be the video starting with low quality and the quality should increase until both players reach the 512 kbit level.
+
+### Case #3
+
+The second case is a test of two players both using the FESTIVE ABR algorithm. Run it by running the following command in two different terminal windows:
+
+```
+./gpac/bin/gcc/gpac -k -logs=dash@info httpin:src=http://localhost:8080/eater.mpd @0 dashin:algo=festive:aggressive=yes @0 ffdec @0 compositor:player=base:FID=compose:mbuf=15000
+```
+
+The expected output should be the same as test case #2, except in the logs for both players it should show that the algorithm being used is FESTIVE and not PANDA.
+
+
 ## Viewing the videos using a custom rate adaptation algorithm in GPAC
 
 Play a video using the bba0 algorithm:
@@ -33,6 +67,9 @@ Play a video using the bba0 algorithm:
 ```
 
 To use one of the algorithms I added, try switching `algo=bba0` for `algo=quetra`, `algo=festive` or `algo=panda`.
+
+
+To change the video, change `tom.mpd` to either `eater.mpd` or `scientific.mpd`.
 
 ## Complex Usage (Any linux OS)
 
