@@ -5,7 +5,7 @@
 git submodule update --init --recursive
 
 # install dependencies
-sudo apt-get update && sudo apt-get install -y ffmpeg gpac docker python3-pip
+sudo apt-get update && sudo apt-get install -y ffmpeg gpac python3-pip libavcodec-dev libavformat-dev libavdevice-dev mesa-common-dev libglu1-mesa-dev freeglut3-dev
 pip3 install gdown
 
 # download videos
@@ -25,7 +25,7 @@ popd
 # compile GPAC fork
 pushd gpac
 
-./configure --use-ffmpeg && make -j
+./configure && make -j
 
 popd
 
