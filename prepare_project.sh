@@ -5,7 +5,7 @@
 git submodule update --init --recursive
 
 # install dependencies
-sudo apt-get update && sudo apt-get upgrade && sudo apt-get install -y ffmpeg gpac docker
+sudo apt-get update && sudo apt-get install -y ffmpeg gpac docker python3-pip
 pip install gdown
 
 # download videos
