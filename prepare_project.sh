@@ -25,7 +25,7 @@ popd
 # compile GPAC fork
 pushd gpac
 
-./configure && make -j
+./configure --use-ffmpeg && make -j
 
 popd
 

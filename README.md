@@ -1,8 +1,6 @@
 # 471 Project - Rate Adaptation Algorithms in GPAC
 
-## Usage
-
-### Cloning
+## Cloning
 
 This repository uses git submodules to include my custom fork of GPAC. Make sure to clone recursively:
 
@@ -10,12 +8,39 @@ This repository uses git submodules to include my custom fork of GPAC. Make sure
 git clone --recurse git@github.com:vmartsynovskyy/471project.git
 ```
 
+## Simple Usage (Ubuntu 20.04)
+
+### Run the project setup script
+
+The project setup script will install the dependencies, build GPAC, downloads some sample videos, convert them to the correct format for DASH,
+builds the nginx docker container and starts the nginx docker container. This script may take a while, especially on the video conversion phase.
+
+
+The only prerequisite for this script is to have docker installed and working. This dependency is not handled by the script itself
+because docker installation on Ubuntu is complex and conflicting installations can cause issues.
+
+```
+./prepare_project.sh
+```
+
+WARNING: Do not exit the script until done viewing the videos because it runs the DASH server. The next steps can be completed in another tab.
+
+## Viewing the videos using a custom rate adaptation algorithm in GPAC
+
+Play a video using the bba0 algorithm:
+```
+./gpac/bin/gcc/gpac -k -logs=dash@info httpin:src=http://localhost:8080/tom.mpd @0 dashin:algo=bba0:aggressive=yes @0 ffdec @0 compositor:player=base:FID=compose:mbuf=15000
+```
+
+To use one of the algorithms I added, try switching `algo=bba0` for `algo=quetra`, `algo=festive` or `algo=panda`.
+
+## Complex Usage (Any linux OS)
+
 ### Dependencies
 
 This project depends of ffmpeg, gpac, and docker. To install the dependencies on Ubuntu, run the following command:
 
-```
-sudo apt-get update && sudo apt-get install ffmpeg gpac docker
+``` sudo apt-get update && sudo apt-get install ffmpeg gpac docker
 ```
 
 ### Preparing Videos
@@ -55,18 +80,4 @@ Check that the container started successfully by trying to access `http://localh
 
 
 TODO: Instructions for quality levels
-
-### Viewing the videos using a custom rate adaptation algorithm in GPAC
-
-Navigate to the `gpac` submodule of this repository and build the custom fork:
-```
-./configure --disable-ssl && make -j
-```
-
-Play a video using the bba0 algorithm:
-```
-./bin/gcc/gpac -k -logs=dash@info httpin:src=http://localhost:8080/tom.mpd @0 dashin:algo=bba0:aggressive=yes @0 ffdec @0 compositor:player=base:FID=compose:mbuf=15000
-```
-
-To use one of the algorithms I added, try switching `algo=bba0` for `algo=quetra`, `algo=festive` or `algo=panda`.
 
