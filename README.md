@@ -60,15 +60,13 @@ TODO: Instructions for quality levels
 
 Navigate to the `gpac` submodule of this repository and build the custom fork:
 ```
-./configure && make -j
+./configure --disable-ssl && make -j
 ```
 
 Play a video using the bba0 algorithm:
 ```
-./bin/gcc/gpac --algo=bba0 --buffer=15000 --aggressive=yes -logs=dash@info -i http://localhost:8080/tom.mpd vout ffdec 
+./bin/gcc/gpac -k -logs=dash@info httpin:src=http://localhost:8080/tom.mpd @0 dashin:algo=bba0:aggressive=yes @0 ffdec @0 compositor:player=base:FID=compose:mbuf=15000
 ```
 
-TODO: Add buffer stats
-
-TODO: Configure with minimal dependencies
+To use one of the algorithms I added, try switching `algo=bba0` for `algo=quetra`, `algo=festive` or `algo=panda`.
 
