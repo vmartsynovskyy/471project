@@ -13,7 +13,7 @@ mkdir -p videos
 pushd videos
 
 # tom.mp4
-gdown --id 1bGYfgrziLQi7ZwgFF2GrID1qUZh3ONqW
+python3 -m gdown --id 1bGYfgrziLQi7ZwgFF2GrID1qUZh3ONqW
 
 # convert videos for DASH
 ./mp4_to_dash.sh tom
