@@ -40,7 +40,7 @@ show some information about the buffer health and quality levels at each run of 
 
 ### Case #2
 
-The second case is a test of two players both using the PANDA ABR algorithm. Run it by running the following command in two different terminal windows:
+The second case is a test of two players both using the PANDA ABR algorithm. The players are both sharing a 1200 kbit link (the docker image has rate control built in). Run it by running the following command in two different terminal windows:
 
 ```
 ./gpac/bin/gcc/gpac -k -logs=dash@info httpin:src=http://localhost:8080/scientific.mpd @0 dashin:algo=panda:aggressive=yes @0 ffdec @0 compositor:player=base:FID=compose:mbuf=15000
@@ -50,7 +50,7 @@ The expected output should be the video starting with low quality and the qualit
 
 ### Case #3
 
-The second case is a test of two players both using the FESTIVE ABR algorithm. Run it by running the following command in two different terminal windows:
+The second case is a test of two players both using the FESTIVE ABR algorithm. The players are both sharing a 1200 kbit link just like the last test case. Run it by running the following command in two different terminal windows:
 
 ```
 ./gpac/bin/gcc/gpac -k -logs=dash@info httpin:src=http://localhost:8080/eater.mpd @0 dashin:algo=festive:aggressive=yes @0 ffdec @0 compositor:player=base:FID=compose:mbuf=15000
@@ -83,7 +83,6 @@ sudo apt-get update && sudo apt-get install ffmpeg gpac docker
 
 ### Preparing Videos
 
-TODO: Google drive link with videos
 
 To prepare videos for use in DASH, I've created a script that uses ffmpeg to generate different versions
 of videos and MP4Box (provided by gpac) to segment those videos and create a manifest.
@@ -115,7 +114,4 @@ docker run --privileged -p 8080:8080 -v /home/vadym/dev/cmpt471/project/471proje
 ```
 
 Check that the container started successfully by trying to access `http://localhost:8080/tom.mpd` in your browser.
-
-
-TODO: Instructions for quality levels
 
