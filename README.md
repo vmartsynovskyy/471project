@@ -40,7 +40,8 @@ To use one of the algorithms I added, try switching `algo=bba0` for `algo=quetra
 
 This project depends of ffmpeg, gpac, and docker. To install the dependencies on Ubuntu, run the following command:
 
-``` sudo apt-get update && sudo apt-get install ffmpeg gpac docker
+```
+sudo apt-get update && sudo apt-get install ffmpeg gpac docker
 ```
 
 ### Preparing Videos
@@ -73,7 +74,7 @@ Then run the Docker image, mounting the videos directory into the Docker contain
 sure to change the directory to the absolute path of the videos directory since docker only supports absolute paths:
 
 ```
-docker run -p 8080:8080 -v /home/vadym/dev/cmpt471/project/471project/videos:/www/data nginx-video
+docker run --privileged -p 8080:8080 -v /home/vadym/dev/cmpt471/project/471project/videos:/www/data nginx-video
 ```
 
 Check that the container started successfully by trying to access `http://localhost:8080/tom.mpd` in your browser.

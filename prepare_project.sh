@@ -14,9 +14,15 @@ pushd videos
 
 # tom.mp4
 python3 -m gdown.cli --id 1bGYfgrziLQi7ZwgFF2GrID1qUZh3ONqW
+# scientific.mp4
+python3 -m gdown.cli --id 1gpSe7hwnP2BXNzNZ6wWWppSTVQ7cu9oH
+# eater.mp4
+python3 -m gdown.cli --id 1dnYSifqMusKVuY1jGlOCjmaYM69teZBc
 
 # convert videos for DASH
 ./mp4_to_dash.sh tom
+./mp4_to_dash.sh scientific
+./mp4_to_dash.sh eater
 
 VIDEOS_PATH=$(pwd)
 
