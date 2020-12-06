@@ -13,10 +13,12 @@ mkdir -p videos
 pushd videos
 
 # tom.mp4
-python3 -m gdown --id 1bGYfgrziLQi7ZwgFF2GrID1qUZh3ONqW
+python3 -m gdown.cli --id 1bGYfgrziLQi7ZwgFF2GrID1qUZh3ONqW
 
 # convert videos for DASH
 ./mp4_to_dash.sh tom
+
+VIDEOS_PATH=$(pwd)
 
 popd
 
@@ -24,6 +26,14 @@ popd
 pushd gpac
 
 ./configure && make -j
+
+popd
+
+# start docker service
+pushd docker
+
+docker build -t nginx-video .
+docker run -p 8080:8080 -v ${VIDEOS_PATH}:/www/data nginx-video
 
 popd
 
