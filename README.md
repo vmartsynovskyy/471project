@@ -38,6 +38,10 @@ The first case is a basic test case of the QUETRA ABR algorithm. Run it using th
 The expected output should be the video starting with low quality and the quality should increase until it stabilizes at the highest level. The logs should
 show some information about the buffer health and quality levels at each run of the algorithm.
 
+
+If you get a 404 error or a connection error, try re-running the prepare_project.sh script and make sure to leave the script running because it starts the DASH
+server at the end.
+
 ### Case #2
 
 The second case is a test of two players both using the PANDA ABR algorithm. The players are both sharing a 1200 kbit link (the docker image has rate control built in). Run it by running the following command in two different terminal windows:
@@ -46,7 +50,8 @@ The second case is a test of two players both using the PANDA ABR algorithm. The
 ./gpac/bin/gcc/gpac -k -logs=dash@info httpin:src=http://localhost:8080/scientific.mpd @0 dashin:algo=panda:aggressive=yes @0 ffdec @0 compositor:player=base:FID=compose:mbuf=15000
 ```
 
-The expected output should be the video starting with low quality and the quality should increase until both players reach the 512 kbit level.
+The expected output should be the video starting with low quality and the quality should increase until both players reach the 512 kbit level. Since this algorithm uses
+AIMD, there maybe a sawtooth pattern in the qualities with slow increases followed by a rapid drop.
 
 ### Case #3
 
@@ -56,7 +61,8 @@ The second case is a test of two players both using the FESTIVE ABR algorithm. T
 ./gpac/bin/gcc/gpac -k -logs=dash@info httpin:src=http://localhost:8080/eater.mpd @0 dashin:algo=festive:aggressive=yes @0 ffdec @0 compositor:player=base:FID=compose:mbuf=15000
 ```
 
-The expected output should be the same as test case #2, except in the logs for both players it should show that the algorithm being used is FESTIVE and not PANDA.
+The expected output should be the same as test case #2, except in the logs for both players it should show that the algorithm being used is FESTIVE and not PANDA. This
+algorithm should be more stable and converge quicker than PANDA.
 
 
 ## Viewing the videos using a custom rate adaptation algorithm in GPAC
@@ -78,10 +84,12 @@ To change the video, change `tom.mpd` to either `eater.mpd` or `scientific.mpd`.
 This project depends of ffmpeg, gpac, and docker. To install the dependencies on Ubuntu, run the following command:
 
 ```
-sudo apt-get update && sudo apt-get install ffmpeg gpac docker
+sudo apt-get update && sudo apt-get install -y ffmpeg gpac libavcodec-dev libavformat-dev libavdevice-dev mesa-common-dev libglu1-mesa-dev freeglut3-dev
 ```
 
 ### Preparing Videos
+
+There are some sample videos in this Google drive folder: https://drive.google.com/drive/folders/1nLaClzwT28d1t1yfHQKvT11MBAX5xkrQ?usp=sharing
 
 
 To prepare videos for use in DASH, I've created a script that uses ffmpeg to generate different versions
