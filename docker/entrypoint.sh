@@ -34,7 +34,7 @@ fi
 
 # set up network emulation
 tc qdisc add dev eth0 root handle 1:0 netem delay 50ms
-tc qdisc add dev eth0 parent 1:1 handle 10: tbf rate 1200kbit buffer 16000 limit 30000
+tc qdisc add dev eth0 parent 1:1 handle 10: tbf rate 1100kbit buffer 10000 limit 30000
 
 # default behaviour is to launch nginx
 if [[ -z ${1} ]]; then
